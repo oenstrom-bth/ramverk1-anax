@@ -4,7 +4,7 @@ title: "Olofs me-sida"
 Om mig
 =========================
 
-<img src="image/olof-enstrom.jpg?h=300&q=100" class="left" alt="Olof Enström">
+[FIGURE src="image/olof-enstrom.jpg?h=300&q=100" class="left" alt="Olof Enström"]
 
 År 1995 föddes jag, Olof Enström, i Kalmar. Jag är uppvuxen i Smedby, en liten by utanför Kalmar. Jag har alltid haft ett stort teknikintresse och har alltid varit den i familjen som har fått ta hand om tekniska prylar och problem.
 

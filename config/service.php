@@ -5,14 +5,18 @@
 
 // Add all resources to $app
 $app = new \Anax\App\App();
-$app->request    = new \Anax\Request\Request();
-$app->response   = new \Anax\Response\Response();
-$app->url        = new \Anax\Url\Url();
-$app->router     = new \Anax\Route\RouterInjectable();
-$app->view       = new \Anax\View\ViewContainer();
-$app->textfilter = new \Anax\TextFilter\TextFilter();
-$app->session    = new \Anax\Session\SessionConfigurable();
-$app->navbar     = new \Oenstrom\Navbar\Navbar();
+$app->request           = new \Anax\Request\Request();
+$app->response          = new \Anax\Response\Response();
+$app->url               = new \Anax\Url\Url();
+$app->router            = new \Anax\Route\RouterInjectable();
+$app->view              = new \Anax\View\ViewContainer();
+$app->textfilter        = new \Anax\TextFilter\TextFilter();
+$app->session           = new \Anax\Session\SessionConfigurable();
+$app->navbar            = new \Oenstrom\Navbar\Navbar();
+$app->rem               = new \Anax\RemServer\RemServer();
+$app->remController     = new \Anax\RemServer\RemServerController();
+$app->comment           = new \Oenstrom\Comment\Comment();
+$app->commentController = new \Oenstrom\Comment\CommentController();
 
 // Configure request
 $app->request->init();
@@ -36,12 +40,18 @@ $app->url->setDefaultsFromConfiguration();
 $app->view->setApp($app);
 $app->view->configure("view.php");
 
-// Update navbar configuration with values from config file.
+// Configure navbar
 $app->navbar->configure("navbar.php");
-// Set the current route in the navbar.
 $app->navbar->setCurrentRoute($app->request->getRoute());
-// Inject url->create into the navbar.
 $app->navbar->setUrlCreator([$app->url, "create"]);
+
+// Configure REM server
+$app->rem->configure("remserver.php");
+$app->rem->inject(["session" => $app->session]);
+$app->remController->setApp($app);
+
+$app->comment->inject(["session" => $app->session]);
+$app->commentController->setApp($app);
 
 // Return the populated $app
 return $app;

@@ -1,0 +1,80 @@
+// ==========================================================================
+// Base Stylesheet
+// ==========================================================================
+
+// Import Base
+@import "base";
+
+// Import Base Helpers
+@import "base/_helpers";
+
+// ==========================================================================
+// Variable overrides
+@base-link-color:         #0069d6;
+@base-link-hover-color:   #007dff;
+
+//
+
+html {
+    background-color: #222;
+}
+
+legend {
+    .font-size(@base-h3-font-size);
+}
+
+code {
+    background-color: #efefef;
+}
+
+.margin-bottom-20 { margin-bottom: 20px; }
+
+.outer-header-wrap {
+    border-bottom: 1px solid silver;
+    .pad-top-15();
+    .pad-bottom-15();
+}
+.text-logo {
+    .no-margin();
+    a {
+        text-decoration: none;
+    }
+}
+.navbar {
+    ul {
+        margin-left: auto;
+        .list-unstyled();
+        .flex();
+        .flex-end();
+        align-items: center;
+
+        li {
+            .block();
+            margin-left: 10px;
+            &.active, &:hover {
+                background-color: @base-link-hover-color;
+                a { color: #fff; }
+            }
+            a {
+                .block();
+                padding: 10px 20px;
+                text-decoration: none;
+            }
+        }
+    }
+}
+
+.outer-footer-wrap {
+    background: #222;
+    color: #fff;
+}
+
+.comment {
+    border: 1px solid silver;
+    margin: 20px 2px;
+    padding: 0.7em;
+
+    .figure {
+        margin: 0 10px 0 0;
+    }
+}
