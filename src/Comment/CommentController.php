@@ -2,15 +2,15 @@
 
 namespace Oenstrom\Comment;
 
-use \Anax\Common\AppInjectableInterface;
-use \Anax\Common\AppInjectableTrait;
+use \Anax\DI\InjectionAwareInterface;
+use \Anax\DI\InjectionAwareTrait;
 
 /**
  * A controller for the comments.
  */
-class CommentController implements AppInjectableInterface
+class CommentController implements InjectionAwareInterface
 {
-    use AppInjectableTrait;
+    use InjectionAwareTrait;
 
 
 
@@ -19,7 +19,7 @@ class CommentController implements AppInjectableInterface
      */
     public function start()
     {
-        $this->app->session->start();
+        $this->di->get("session")->start();
     }
 
 
@@ -31,11 +31,14 @@ class CommentController implements AppInjectableInterface
      */
     public function getComments()
     {
-        $content = $this->app->comment->getComments();
+        $content = $this->di->get("comment")->getComments();
         foreach ($content as &$comment) {
-            $comment["text"] = $this->app->textfilter->parse($comment["text"], ["markdown"])->text;
+            $comment["text"] = $this->di->get("textfilter")->parse($comment["text"], ["markdown"])->text;
         }
-        return $content;
+        $this->di->get("view")->add("comment/comments", ["comments" => $content]);
+        $this->di->get("view")->add("comment/comment-post");
+        $this->di->get("pageRender")->renderPage(["title" => "Kommentarer"]);
+        //return $content;
     }
 
 
@@ -48,11 +51,13 @@ class CommentController implements AppInjectableInterface
      */
     public function getComment($id)
     {
-        $comment = $this->app->comment->getComment($id);
+        $comment = $this->di->get("comment")->getComment($id);
         if (empty($comment)) {
-            $this->app->redirect("comments");
+            return null;//$this->di->redirect("comments");
         }
-        return $comment;
+        $this->di->get("view")->add("comment/comment-edit", ["comment" => $comment]);
+        $this->di->get("pageRender")->renderPage(["title" => "Redigera kommentar"]);
+        // return $comment;
     }
 
 
@@ -62,12 +67,12 @@ class CommentController implements AppInjectableInterface
      */
     public function postComment()
     {
-        $email = $this->app->request->getPost("email");
-        $comment = $this->app->request->getPost("comment");
+        $email = $this->di->get("request")->getPost("email");
+        $comment = $this->di->get("request")->getPost("comment");
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $this->app->comment->postComment($email, $comment);
+            $this->di->get("comment")->postComment($email, $comment);
         }
-        $this->app->redirect("comments");
+        $this->di->get("response")->redirect($this->di->get("url")->create("comments"));
     }
 
 
@@ -79,12 +84,15 @@ class CommentController implements AppInjectableInterface
      */
     public function updateComment($id)
     {
-        $email = $this->app->request->getPost("email");
-        $comment = $this->app->request->getPost("comment");
-        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $this->app->comment->updateComment($id, $email, $comment);
+        $email = $this->di->get("request")->getPost("email");
+        $comment = $this->di->get("request")->getPost("comment");
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $this->di->get("response")->redirect($this->di->get("url")->create("comments/edit/$id"));
         }
-        $this->app->redirect("comments");
+        $this->di->get("comment")->updateComment($id, $email, $comment);
+        $this->di->get("response")->redirect($this->di->get("url")->create("comments"));
+        //$this->response->redirect($this->url->create($url));
+        //$this->app->redirect("comments");
     }
 
 
@@ -96,7 +104,7 @@ class CommentController implements AppInjectableInterface
      */
     public function deleteComment($id)
     {
-        $this->app->comment->deleteComment($id);
-        $this->app->redirect("comments");
+        $this->di->get("comment")->deleteComment($id);
+        $this->di->get("response")->redirect($this->di->get("url")->create("comments"));
     }
 }

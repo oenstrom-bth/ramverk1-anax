@@ -68,7 +68,28 @@ För tillfället har jag gjort en prototyp där man kan skapa, redigera och ta b
 
 ##Kmom03
 
-Redovisningstext här.
+###Hur känns det att jobba med begreppen kring dependency injection, service locator och lazy loading?
+DI och SL är inget jag är särskilt bekant med. Jag tycker dock det har gått ganska bra att jobba med det i det här kursmomentet. Det blir ju lite klurigare att hålla koll på allt när det injectas hit och dit. Det är nog en vanesak och jag tror jag kommer känna annorlunda längre fram. Tror även jag ska läsa på ännu mer om det för att verkligen trycka in det så att man förstår.
+
+Lazy loading är något jag har hört talas om inom JavaScript-världen. Där handlar det mycket om att ladda in till exempel bilder först när användaren har scrollat ner till själva bilden. Principen är väl densamma i PHP och det är ett smart sätt att förbättra prestandan.
+
+###Hur känns det att göra dig av med beroendet till $app, blir $id bättre?
+Det har inte varit några problem att byta ut `$app` mot `$id`. De fungerar ju ungefär på samma sätt men jag tror `$id` kommer bli bättre att använda. Tror att jag längre fram kommer tycka det blir ännu bättre med $id.
+
+###Hur känns det att återigen göra refaktoring på din me-sida, blir det förbättringar på kodstrukturen, eller bara annorlunda?
+Det känns bra med refaktoring av min me-sida. Det blev lite rörigt medan jag gjorde det, det var många olika filer att hålla koll på i början och det var lite konstigt. Nu efter att det är klart så känns det faktiskt riktigt bra. Strukturen känns bättre och mer genomtänkt trots att det blir lite mer kod.
+
+I oophp-kursen kände jag att det alltid var något som saknades när det kom till kodstrukturen. Det var klumpigt, inte lika välstrukturerat och jag vill förbättra det, men visste inte hur. Nu vet jag vad det var och jag tror kmom04 kommer göra det ännu smidigare med databaser och formulär.
+
+###Lyckades du införa begreppen kring DI när du vidareutvecklade ditt kommentarssystem?
+Jag vidareutvecklade inte kommentarssystemet, mer om det i nästa fråga, jag refactor:ade endast så att systemet använder DI och de nya routsen. Det blev endel saker att hålla koll på. Vilken kod som skulle vart och vad som var tvunget att skrivas om. Det var lite knepigt men fick ändå ihop det ganska snabbt tycker jag.
+
+###Påbörjade du arbetet (hur gick det) med databasmodellen eller avvaktar du till kommande kmom?
+Då det här kursmomentet gick så snabbt och i nästa kursmoment hade jag ändå fått göra om ganska mycket, så påbörjade jag det inte alls. Istället hoppar jag direkt in i kmom04 på tisdagen. Får se om jag till och med lyckas få båda kursmomenten gjorde den här veckan.
+
+###Allmänna kommentarer kring din me-sida och dess kodstruktur?
+Strukturen upplever jag ha blivit mycket bättre jämfört med oophp och även första kursmomentet. Annars när det kommer till me-sidan så skulle jag väl kunna jobba mer på utseendet. Speciellt när det kommer till “responsivitet”. Det kommer efterhand, i värsta fall får det förbättras i projektet.
+
 
 
 

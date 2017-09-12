@@ -1,5 +1,11 @@
 # Revision history
 
+## v3.0.0 (2017-09-12)
+* Refactored to use DI.
+* Refactored routes.
+
+---
+
 ## v2.0.0 (2017-09-07)
 * Added a session based comment system prototype
 * Added a REM server

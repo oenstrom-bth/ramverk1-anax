@@ -49,8 +49,8 @@ help:
 #
 # Theme
 #
-# target: theme              - Do lessc --clean-css styles.less ../htdocs/css/style.css
+# target: theme              - Do lessc --clean-css styles.less ../htdocs/css/style.min.css
 .PHONY: theme
 theme:
 	@$(call HELPTEXT,$@)
-	lessc --clean-css styles.less ../htdocs/css/style.css
+	lessc --clean-css styles.less ../htdocs/css/style.min.css

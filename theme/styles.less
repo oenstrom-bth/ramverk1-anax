@@ -27,6 +27,15 @@ code {
     background-color: #efefef;
 }
 
+.hyphenate {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+}
+
 .margin-bottom-20 { margin-bottom: 20px; }
 
 .outer-header-wrap {
@@ -70,6 +79,7 @@ code {
 }
 
 .comment {
+    .hyphenate();
     border: 1px solid silver;
     margin: 20px 2px;
     padding: 0.7em;

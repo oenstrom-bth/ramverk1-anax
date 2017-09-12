@@ -2,20 +2,37 @@
 
 namespace Oenstrom\Navbar;
 
+use \Anax\Common\AppInjectableInterface;
+use \Anax\Common\ConfigureInterface;
+
 /**
  * Class for creating the navbar.
  */
-class Navbar implements \Anax\Common\AppInjectableInterface, \Anax\Common\ConfigureInterface
+class Navbar implements AppInjectableInterface, ConfigureInterface
 {
     use \Anax\Common\AppInjectableTrait;
     use \Anax\Common\ConfigureTrait;
 
     /**
      * @var string         $currentRoute the current route.
-     * @var callable       $createUrl the callable for creating url.
      */
     private $currentRoute;
-    private $createUrl;
+
+
+
+    /**
+     * Inject dependency to $url..
+     *
+     * @param array $url object representing Url.
+     *
+     * @return self
+     */
+    public function injectUrl($url)
+    {
+        $this->url = $url;
+        return $this;
+    }
+
 
 
     /**
@@ -27,6 +44,7 @@ class Navbar implements \Anax\Common\AppInjectableInterface, \Anax\Common\Config
     {
         return $this->config["config"]["class"];
     }
+
 
 
     /**
@@ -42,18 +60,6 @@ class Navbar implements \Anax\Common\AppInjectableInterface, \Anax\Common\Config
     }
 
 
-    /**
-     * Sets the callable to use for creating routes.
-     *
-     * @param callable $urlCreate to create framework urls.
-     *
-     * @return void
-     */
-    public function setUrlCreator($urlCreate)
-    {
-        $this->createUrl = $urlCreate;
-    }
-
 
     /**
      * Get HTML for the navbar.
@@ -67,7 +73,8 @@ class Navbar implements \Anax\Common\AppInjectableInterface, \Anax\Common\Config
         $items = is_null($items) ? $this->config["items"] : $items;
         $html = "<ul>";
         foreach ($items as $item) {
-            $url = call_user_func($this->createUrl, $item["route"]);
+            //$url = call_user_func($this->createUrl, $item["route"]);
+            $url = $this->url->create($item["route"]);
             $active = $this->currentRoute === $item["route"] ? ' class="active"' : "";
             $html .= "<li$active>";
             $html .= "<a href='{$url}'>{$item["text"]}</a>";
@@ -79,6 +86,7 @@ class Navbar implements \Anax\Common\AppInjectableInterface, \Anax\Common\Config
         $html .= "</ul>";
         return $html;
     }
+
 
 
     /**

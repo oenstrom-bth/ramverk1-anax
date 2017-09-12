@@ -4,7 +4,7 @@
             <legend class="strong">Redigera kommentar #<?= $comment["id"] + 1 ?></legend>
             <div class="field-group">
                 <label for="email">E-post</label>
-                <input class="field" type="text" id="email" name="email" required value="<?= htmlentities($comment["email"]) ?>">
+                <input class="field" type="email" id="email" name="email" required value="<?= htmlentities($comment["email"]) ?>">
             </div>
             <div class="field-group">
                 <label for="comment">Kommentar</label>
