@@ -16,7 +16,12 @@ return [
         ],
         "response" => [
             "shared" => true,
-            "callback" => "\Anax\Response\Response",
+            //"callback" => "\Anax\Response\Response",
+            "callback" => function () {
+                $obj = new \Anax\Response\ResponseUtility();
+                $obj->setDI($this);
+                return $obj;
+            }
         ],
         "url" => [
             "shared" => true,
@@ -61,9 +66,11 @@ return [
         ],
         "session" => [
             "shared" => true,
+            "active" => true,
             "callback" => function () {
                 $session = new \Anax\Session\SessionConfigurable();
                 $session->configure("session.php");
+                $session->start();
                 return $session;
             }
         ],
@@ -103,6 +110,14 @@ return [
                 return $obj;
             }
         ],
+        "db" => [
+            "shared" => true,
+            "callback" => function () {
+                $obj = new \Anax\Database\DatabaseQueryBuilder();
+                $obj->configure("database.php");
+                return $obj;
+            }
+        ],
         "navbar" => [
             "shared" => true,
             "callback" => function () {
@@ -130,20 +145,52 @@ return [
                 return $rem;
             }
         ],
-        "comment" => [
-            "shared" => true,
-            "callback" => function () {
-                $comment = new \Oenstrom\Comment\Comment();
-                $comment->injectSession($this->get("session"));
-                return $comment;
-            }
-        ],
+        // "comment" => [
+        //     "shared" => true,
+        //     "callback" => function () {
+        //         $comment = new \Oenstrom\Comment\Comment();
+        //         $comment->injectSession($this->get("session"));
+        //         return $comment;
+        //     }
+        // ],
         "commentController" => [
-            "shared" => false,
+            "shared" => true,
             "callback" => function () {
                 $comment = new \Oenstrom\Comment\CommentController();
                 $comment->setDI($this);
                 return $comment;
+            }
+        ],
+        "bookController" => [
+            "shared" => true,
+            "callback" => function () {
+                $obj = new \Anax\Book\BookController();
+                $obj->setDI($this);
+                return $obj;
+            }
+        ],
+        "userController" => [
+            "shared" => true,
+            "callback" => function () {
+                $obj = new \Oenstrom\User\UserController();
+                $obj->setDI($this);
+                return $obj;
+            }
+        ],
+        "adminController" => [
+            "shared" => true,
+            "callback" => function () {
+                $obj = new \Oenstrom\User\AdminController();
+                $obj->setDI($this);
+                return $obj;
+            }
+        ],
+        "authHelper" => [
+            "shared" => true,
+            "callback" => function () {
+                $obj = new \Oenstrom\User\AuthHelper();
+                $obj->setDI($this);
+                return $obj;
             }
         ],
     ],

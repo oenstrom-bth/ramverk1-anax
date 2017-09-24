@@ -99,7 +99,27 @@ Strukturen upplever jag ha blivit mycket bättre jämfört med oophp och även f
 
 ##Kmom04
 
-Redovisningstext här.
+###Hur gick det att integrera formulärhantering och databashantering i ditt kommentarssystem?
+När jag skulle integrera formulärhanteringen så glömde jag starta sessionen vilket gjorde att det inte fungerade med felmeddelande. Efter lite onödigt lång tid hittade jag det och sen så fungerade allt som det var tänkt. Integrationen av databashanteringen gick helt smärtfritt och Book-exemplet fungerade sedan utan problem.
+
+###Berätta om din syn på Active record och liknande upplägg, ser du fördelar och nackdelar?
+Det ger en bra rörlighet när det kommer till olika typer av databaser. Du behöver inte kunna alla skillnader i SQL-syntaxen när du jobbar med ORM. Det är också ett väldigt smidigt och snabbt sätt att få upp fungerande CRUD och i de flesta ORM-lager fungerar “INSERT” och “UPDATE” på samma sätt. Jämfört med oophp-kursen så gick det 100 gånger snabbare att få upp ett fungerande CRUD här än utan Active Record.
+
+Att jobba med ORM är långsammare än rå SQL och det kan vara svårare att optimera om databasfrågan tar lång tid. Vill du utföra komplicerade SQL-frågor så får du kanske lägga lite tid på att studera ORM-lagret för att hitta hur du ska göra. Detta märkte jag i oopython-kursen när vi jobbade med SQLAlchemy. Det fanns väldigt mycket funktionalitet, vilket gjorde det lite svårare att hitta. Att dokumentationen inte var den bästa förbättrade ju inte situationen heller.
+
+###Utveckla din syn på koden du nu har i ramverket och din kommentars- och användarkod. Hur känns det?
+Koden har blivit bättre och bättre för varje kursmoment. Det är dock först nu i kmom04 som jag har lagt till användare. Det jag tycker är svårast är att veta var det är “bäst” att lägga vissa grejer, speciellt nu när formulärhantering och databashantering kom till. Det blir väldigt många filer att hålla koll på och lätt lite rörigt. Trots det känns det som mycket bättre struktur jämfört med när vi gjorde liknande saker i oophp-kursen.
+
+För tillfället har jag delat upp kommentarerna och användarna i två olika moduler. Användarmodulen har två kontroller-klasser, en modell och en hjälpklass. Hjälpklassen kontrollerar att användaren är inloggad och behörighetsnivå. Klassen används sedan även i kommentarsmodulen för att kontrollera om användaren får kommentera, redigera och ta bort.
+
+Jag gissar på att jag behöver slå ihop det till en modul i kmom05?
+
+###Om du vill, och har kunskap om, kan du även berätta om din syn på ORM och designmönstret Data Mapper som är närbesläktade med Active Record. Du kanske har erfarenhet av likande upplägg i andra sammanhang?
+Innan det här kursmomentet hade jag inte någon koll på Data Mapper eller Active Record. Jag visste på ett ungefär vad ORM innebär då vi använde SQLAlchemy i oopython-kursen. Däremot visste jag inte att SQLAlchemy använde designmönstret Data Mapper. Som jag fattar det är den största skillnaden mellan de två olika designmönstrena att i Data Mapper så behöver inte objekten veta hur de sparas i databasen, vilket gör att de klasserna blir lättare och inte behöver ärva lika mycket. Ett lite striktare sätt att hantera det på.
+
+###Vad tror du om begreppet scaffolding, kan det vara något att kika mer på?
+Tror det kan vara ett smidigt sätt att bygga upp grunden till en hel eller delar av en sida via templates. Det påminner om att installera Wordpress, något jag har gjort ett par gånger. Jag känner också att det kommer vara något väldigt användbart i framtiden när jag utvecklar olika typer av hemsidor och webbappar.
+
 
 
 

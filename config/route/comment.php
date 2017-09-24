@@ -5,66 +5,28 @@
 return [
     "routes" => [
         [
-            "info" => "Start the session and initiate the REM Server.",
-            "requestMethod" => null,
-            "path" => "**",
-            "callable" => ["commentController", "start"]
-        ],
-        [
-            "info" => "awdawd",
-            "requestMethod" => "get",
+            "info" => "Get all comments.",
+            "requestMethod" => "get|post",
             "path" => "",
             "callable" => ["commentController", "getComments"]
         ],
         [
-            "info" => "awdawd",
-            "requestMethod" => "get",
+            "info" => "Protect remaining comment routes form unauthenticated users.",
+            "requestMethod" => "get|post",
+            "path" => "**",
+            "callable" => ["authHelper", "authenticatedOnly"]
+        ],
+        [
+            "info" => "Edit a comment.",
+            "requestMethod" => "get|post",
             "path" => "edit/{id:digit}",
-            "callable" => ["commentController", "getComment"]
+            "callable" => ["commentController", "getPostEditComment"]
         ],
         [
-            "info" => "awdawd",
-            "requestMethod" => "post",
-            "path" => "add",
-            "callable" => ["commentController", "postComment"]
-        ],
-        [
-            "info" => "awdad",
-            "requestMethod" => "post",
-            "path" => "update/{id:digit}",
-            "callable" => ["commentController", "updateComment"]
-        ],
-        [
-            "info" => "awdawd",
+            "info" => "Delete a comment.",
             "requestMethod" => "get",
             "path" => "delete/{id:digit}",
-            "callable" => ["commentController", "deleteComment"]
+            "callable" => ["commentController", "getDeleteComment"]
         ],
     ]
 ];
-
-
-
-// $app->router->add("comments/**", [$app->commentController, "start"]);
-//
-// $app->router->add("comments", function () use ($app) {
-//     $app->renderPage([
-//         "title" => "Kommentarer",
-//         "views" => [
-//             ["comment/comments", ["comments" => $app->commentController->getComments()]],
-//             ["comment/comment-post", []]
-//         ]
-//     ]);
-// });
-//
-// $app->router->add("comments/edit/{id:digit}", function ($id) use ($app) {
-//     $app->renderPage([
-//         "title" => "Redigera kommentar",
-//         "views" => [
-//             ["comment/comment-edit", ["comment" => $app->commentController->getComment($id)]]
-//         ]
-//     ]);
-// });
-// $app->router->post("comments/add", [$app->commentController, "postComment"]);
-// $app->router->post("comments/update/{id:digit}", [$app->commentController, "updateComment"]);
-// $app->router->get("comments/delete/{id:digit}", [$app->commentController, "deleteComment"]);

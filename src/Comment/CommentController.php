@@ -2,97 +2,86 @@
 
 namespace Oenstrom\Comment;
 
+use \Anax\Configure\ConfigureInterface;
+use \Anax\Configure\ConfigureTrait;
 use \Anax\DI\InjectionAwareInterface;
 use \Anax\DI\InjectionAwareTrait;
+use \Oenstrom\Comment\HTMLForm\CreateCommentForm;
+use \Oenstrom\Comment\HTMLForm\EditCommentForm;
 
 /**
- * A controller for the comments.
+ * A controller class.
  */
-class CommentController implements InjectionAwareInterface
+class CommentController implements
+    ConfigureInterface,
+    InjectionAwareInterface
 {
-    use InjectionAwareTrait;
+    use ConfigureTrait, InjectionAwareTrait;
 
 
 
     /**
-     * Start the session.
+     * @var $data description
      */
-    public function start()
-    {
-        $this->di->get("session")->start();
-    }
+    //private $data;
 
 
 
     /**
-     * Get all the comments.
+     * Show all comments and comment form.
      *
-     * @return array as the comments.
+     * @return void
      */
     public function getComments()
     {
-        $content = $this->di->get("comment")->getComments();
-        foreach ($content as &$comment) {
-            $comment["text"] = $this->di->get("textfilter")->parse($comment["text"], ["markdown"])->text;
-        }
-        $this->di->get("view")->add("comment/comments", ["comments" => $content]);
-        $this->di->get("view")->add("comment/comment-post");
-        $this->di->get("pageRender")->renderPage(["title" => "Kommentarer"]);
-        //return $content;
+        $title       = "Alla kommentarer";
+        $view        = $this->di->get("view");
+        $pageRender  = $this->di->get("pageRender");
+        $auth        = $this->di->get("authHelper");
+        $comment     = new Comment();
+        $form        = new CreateCommentForm($this->di);
+
+        $comment->setDb($this->di->get("db"));
+        $comment->setTextfilter($this->di->get("textfilter"));
+        $form->check();
+
+        $view->add("comment/show-comments", [
+            "comments" => $comment->getAllAsMarkdown($this->di->get("db")),
+            "user" => $auth->getLoggedInUser(),
+        ]);
+        $view->add("comment/comment-post", [
+            "isLoggedIn" => $auth->isLoggedIn(),
+            "form" => $form->getHTML(["use_buttonbar" => false])
+        ]);
+        $pageRender->renderPage(["title" => $title]);
     }
 
 
 
     /**
-     * Get a specific comment.
+     * Handler with form to delete an item.
      *
-     * @param int $id the id of the comment.
-     * @return array as the comment.
+     * @return void
      */
-    public function getComment($id)
+    public function getPostEditComment($id)
     {
-        $comment = $this->di->get("comment")->getComment($id);
-        if (empty($comment)) {
-            return null;//$this->di->redirect("comments");
+        $title      = "Redigera kommentar";
+        $view       = $this->di->get("view");
+        $pageRender = $this->di->get("pageRender");
+        $user       = $this->di->get("authHelper")->getLoggedInUser();
+        $comment    = new Comment();
+        $comment->setDb($this->di->get("db"));
+        $comment->find("id", $id);
+
+        if ($comment->userId === $user->id || $user->isAdmin()) {
+            $form = new EditCommentForm($this->di, $comment);
+            $form->check();
+
+            $view->add("comment/comment-edit", ["form" => $form->getHTML(["use_buttonbar" => false])]);
+            $pageRender->renderPage(["title" => $title]);
+        } else {
+            $this->di->get("response")->redirect("comments");
         }
-        $this->di->get("view")->add("comment/comment-edit", ["comment" => $comment]);
-        $this->di->get("pageRender")->renderPage(["title" => "Redigera kommentar"]);
-        // return $comment;
-    }
-
-
-
-    /**
-     * Post a new comment.
-     */
-    public function postComment()
-    {
-        $email = $this->di->get("request")->getPost("email");
-        $comment = $this->di->get("request")->getPost("comment");
-        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $this->di->get("comment")->postComment($email, $comment);
-        }
-        $this->di->get("response")->redirect($this->di->get("url")->create("comments"));
-    }
-
-
-
-    /**
-     * Update an existing comment.
-     *
-     * @param int $id the id of the comment.
-     */
-    public function updateComment($id)
-    {
-        $email = $this->di->get("request")->getPost("email");
-        $comment = $this->di->get("request")->getPost("comment");
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $this->di->get("response")->redirect($this->di->get("url")->create("comments/edit/$id"));
-        }
-        $this->di->get("comment")->updateComment($id, $email, $comment);
-        $this->di->get("response")->redirect($this->di->get("url")->create("comments"));
-        //$this->response->redirect($this->url->create($url));
-        //$this->app->redirect("comments");
     }
 
 
@@ -100,11 +89,21 @@ class CommentController implements InjectionAwareInterface
     /**
      * Delete a comment.
      *
-     * @param int $id the id of the comment.
+     * @return void
      */
-    public function deleteComment($id)
+    public function getDeleteComment($id)
     {
-        $this->di->get("comment")->deleteComment($id);
-        $this->di->get("response")->redirect($this->di->get("url")->create("comments"));
+        $auth    = $this->di->get("authHelper");
+        $user    = $auth->getLoggedInUser();
+        $comment = new Comment();
+        $comment->setDb($this->di->get("db"));
+
+        $comment->find("id", $id);
+
+        if ($comment->userId === $user->id || $auth->isAdmin()) {
+            $comment->delete();
+        }
+
+        $this->di->get("response")->redirect("comments");
     }
 }

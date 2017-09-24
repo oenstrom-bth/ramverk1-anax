@@ -26,6 +26,10 @@ return [
         "comment" => [
             "text" => "Kommentarer",
             "route" => "comments",
-        ]
+        ],
+        "book" => [
+            "text" => "Böcker",
+            "route" => "book",
+        ],
     ],
 ];

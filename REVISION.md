@@ -1,5 +1,15 @@
 # Revision history
 
+## v4.0.0 (2017-09-24)
+* Added HTMLForm module.
+* Added Database module.
+* Added Book example.
+* Added users.
+* Comments are now stored in database.
+* Now using Material Design Lite.
+
+---
+
 ## v3.0.0 (2017-09-12)
 * Refactored to use DI.
 * Refactored routes.

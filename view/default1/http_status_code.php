@@ -5,6 +5,9 @@ $message = isset($message) ? $message : "Message not set";
 
 
 
-?><h1><?= $title ?></h1>
+?>
+<div class="mdl-cell mdl-cell--12-col">
+    <h1><?= $title ?></h1>
 
-<p><?= $message ?></p>
+    <p><?= $message ?></p>
+</div>

@@ -90,6 +90,34 @@ class Navbar implements AppInjectableInterface, ConfigureInterface
 
 
     /**
+     * Get HTML for the navbar.
+     *
+     * @param $items array The array to generate HTML from.
+     *
+     * @return string as HTML with the navbar.
+     */
+    public function getLinksOnly($items = null)
+    {
+        $items = is_null($items) ? $this->config["items"] : $items;
+        $html = "<ul>";
+        foreach ($items as $item) {
+            //$url = call_user_func($this->createUrl, $item["route"]);
+            $url = $this->url->create($item["route"]);
+            $active = $this->currentRoute === $item["route"] ? ' class="active"' : "";
+            $html .= "<li$active>";
+            $html .= "<a href='{$url}'>{$item["text"]}</a>";
+            if (isset($item["items"])) {
+                $html .= $this->getHtml($item["items"]);
+            }
+            $html .= "</li>";
+        }
+        $html .= "</ul>";
+        return $html;
+    }
+
+
+
+    /**
      * Create the navbar HTML markup.
      *
      * @return string as navbar in HTML.
