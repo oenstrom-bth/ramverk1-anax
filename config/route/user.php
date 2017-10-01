@@ -3,7 +3,9 @@
  * Routes for user.
  */
 return [
+    "mount" => "user",
     "routes" => [
+        // Routes accessible by anyone.
         [
             "info" => "Register an user.",
             "requestMethod" => "get|post",
@@ -24,8 +26,10 @@ return [
         ],
 
 
+
+        // Routes accessible by authenticated users.
         [
-            "info" => "Protect upcoming routes from unauthorized users.",
+            "info" => "Protect upcoming routes from un-authenticated users.",
             "requestMethod" => "get|post",
             "path" => "**",
             "callable" => ["authHelper", "authenticatedOnly"]
@@ -36,23 +40,39 @@ return [
             "path" => "profile",
             "callable" => ["userController", "getPostProfile"],
         ],
-        // [
-        //     "info" => "Create an user.",
-        //     "requestMethod" => "get|post",
-        //     "path" => "create",
-        //     "callable" => ["userController", "getPostCreateUser"],
-        // ],
-        // [
-        //     "info" => "Delete an item.",
-        //     "requestMethod" => "get|post",
-        //     "path" => "delete",
-        //     "callable" => ["userController", "getPostDeleteItem"],
-        // ],
-        // [
-        //     "info" => "Update an item.",
-        //     "requestMethod" => "get|post",
-        //     "path" => "update/{id:digit}",
-        //     "callable" => ["userController", "getPostUpdateItem"],
-        // ],
+
+
+
+        // Routes accessible by admins only.
+        [
+            "info" => "Protect upcoming routes from un-authorized users.",
+            "requestMethod" => "get|post",
+            "path" => "admin/**",
+            "callable" => ["authHelper", "adminOnly"]
+        ],
+        [
+            "info" => "Display all users",
+            "requestMethod" => "get",
+            "path" => "admin/users",
+            "callable" => ["adminController", "getUsers"],
+        ],
+        [
+            "info" => "Create a new user.",
+            "requestMethod" => "get|post",
+            "path" => "admin/users/add",
+            "callable" => ["adminController", "getPostNewUser"],
+        ],
+        [
+            "info" => "Update an user.",
+            "requestMethod" => "get|post",
+            "path" => "admin/users/update/{id:digit}",
+            "callable" => ["adminController", "getPostEditUser"]
+        ],
+        [
+            "info" => "Delete an user.",
+            "requestMethod" => "get",
+            "path" => "admin/users/delete/{id:digit}",
+            "callable" => ["adminController", "getDeleteUser"]
+        ],
     ]
 ];

@@ -129,7 +129,27 @@ Tror det kan vara ett smidigt sätt att bygga upp grunden till en hel eller dela
 
 ##Kmom05
 
-Redovisningstext här.
+###Hur gick arbetet med att lyfta ut koden ur me-sidan och placera i en egen modul?
+Jag valde att lyfta ut användardelen i en egen modul då jag redan hade det uppdelat i en kommentarsdel och en användardel. Sedan lyfte jag ut filerna rakt av utan att ändra något. Därefter plockade jag ut delar av config-filerna som behövdes. Detta gjorde jag sen till ett repo som jag installerade i en ny Anax-installation för att testa. I den nya installationen gjorde jag sen en länk för att kunna jobba direkt i modulen.
+
+Det gick faktiskt väldigt smidigt att lyfta ut det till en egen modul. Det gällde bara att hitta och komma ihåg alla delar som skulle vara med för att det skulle fungera. Jag glömde till exempel bort att lägga till Anax\Database som en service i DI-containern. Annars fungerade allt direkt utan att jag behövde ändra något. Jag fixade dock till lite saker och anpassade det mer för att vara en separat modul.
+
+###Flöt det på bra med GitHub och kopplingen till Packagist?
+Att koppla GitHub-repot till Packagist var inga problem. Allt gick smärtfritt, mer kan jag inte säga om det. Det är bra att det är så lätt och smidigt att skapa en modul om man vill dela med sig av sin kod.
+
+###Hur gick det att åter installera modulen i din me-sida med composer, kunde du följa din installationsmanual?
+Jag testade först att installera den i en ny installation av Anax. När jag såg att det fungerade så vågade jag mig på att göra det i min Me-sida. Hade inga problem att följa min manual, tycker jag lyckades göra den ganska bra. Jag valde att göra ett ‘make’-kommando för att installera modulen automatiskt. I korta drag är det `composer require oenstrom/user` och sen `make install-module`. Om man vill så kan man göra en manuell installation, det står hur man gör det i manualen också. Det sista som behöver göras är att köra lite SQL-kod, sen är allt klart.
+
+###Hur väl lyckas du enhetstesta din modul och hur mycket kodtäckning fick du med?
+Jag tycker det var ganska svårt att enhetstesta modulen. Det är väldigt mycket beroenden hit och dit, vilket gör det mycket svårare. Det första jag vill enhetstesta var min User-klass och här kom första problemet, databas. Klassen extendar ActiveRecordModel och jag har ingen aning om hur jag ska testa det.
+
+Efter ett antal svordomar kom jag fram till att jag borde kunna göra en Mock på DatabaseQueryBuilder.php som skickas in i User-klassen istället för den vanliga QueryBuildern. Så när User-klassen gör `->find()` så används min Mock-klass istället för den vanliga som hämtar data från databasen. Mock-klassen är inte den finaste men det fungerar och jag kunde testa hela User-klassen och få 100% kodtäckning i den.
+
+Sedan gav jag mig på några av de andra klasserna och kom en bit på AuthHelper-klassen. Jag fick dock lite problem där som jag inte kunde lösa. Beroendena blev fler och tiden blev knapp så jag fick ge upp. När det kommer till kodstäckningen fick jag i alla fall totalt 14.63% av raderna och 31.03% av metoderna. Sen fick jag 100% i en klass och 60% i en annan. Det kunde ha varit värre...
+
+###Några reflektioner över skillnaden med och utan modul?
+Något som är lite svårare nu är att anpassa modulen mellan installationer. Visst går det att ändra i vendor-mappen, men det är ju inte optimalt. Helst så ska moduler vara väldigt fristående och lättanpassade. Min modul skulle behöva göras på ett annorlunda sätt och att ha åtta beroenden känns kanske inte heller så bra.
+
 
 
 

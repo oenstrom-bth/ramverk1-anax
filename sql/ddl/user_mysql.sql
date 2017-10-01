@@ -32,7 +32,7 @@ DROP TABLE IF EXISTS User;
 -- Table User
 --
 CREATE TABLE User (
-    `id` INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `id` 		INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     `role`		VARCHAR(20) NOT NULL DEFAULT 'user',
     `username`	VARCHAR(80) UNIQUE NOT NULL,
     `email`		VARCHAR(255) UNIQUE NOT NULL,
@@ -44,19 +44,20 @@ CREATE TABLE User (
 
 CREATE TABLE Comment (
     `id` 		INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    `user_id`	INTEGER NOT NULL,
+    `userId`	INTEGER NOT NULL,
     `content`	TEXT NOT NULL,
     `created`	TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    
-    FOREIGN KEY (`user_id`) REFERENCES User(`id`) ON UPDATE CASCADE ON DELETE CASCADE
+
+    FOREIGN KEY (`userId`) REFERENCES User(`id`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE INNODB CHARACTER SET utf8 COLLATE utf8_swedish_ci;
 
 
-INSERT INTO User(role, username, email, password) VALUES('admin', 'admin', 'admin@admin.com', '$2y$10$Njbsb6l8TCLdvHUcS/65IOcEVARQGICBYqDqx8843aPgpVdlYedrC');
-INSERT INTO User(role, username, email, password) VALUES('user', 'doe', 'olof.enstrom@gmail.com', '$2y$10$26KgRWjs3F654.yHpsYYDO4sd86ksNN1E8zpQ2yHMA/yx33tV/ACq');
+INSERT INTO User(role, username, email, password) VALUES
+('admin', 'admin', 'admin@admin.com', '$2y$10$Njbsb6l8TCLdvHUcS/65IOcEVARQGICBYqDqx8843aPgpVdlYedrC'),
+('user', 'doe', 'user@user.com', '$2y$10$26KgRWjs3F654.yHpsYYDO4sd86ksNN1E8zpQ2yHMA/yx33tV/ACq');
 
-INSERT INTO Comment(user_id, content) VALUES(1, '#Första kommentaren\n##Markdown ska fungera i kommentarerna.');
-INSERT INTO Comment(user_id, content) VALUES(2, '#Andra kommentaren\n##Markdown ska fungera i kommentarerna.\n\n och länkar: https://google.com');
+INSERT INTO Comment(userId, content) VALUES(1, '#Första kommentaren\n##Markdown ska fungera i kommentarerna.');
+INSERT INTO Comment(userId, content) VALUES(2, '#Andra kommentaren\n##Markdown ska fungera i kommentarerna.\n\n och länkar: https://google.com');
 
 SELECT * FROM User;
 SELECT * FROM Comment;

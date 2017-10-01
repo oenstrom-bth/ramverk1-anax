@@ -110,14 +110,6 @@ return [
                 return $obj;
             }
         ],
-        "db" => [
-            "shared" => true,
-            "callback" => function () {
-                $obj = new \Anax\Database\DatabaseQueryBuilder();
-                $obj->configure("database.php");
-                return $obj;
-            }
-        ],
         "navbar" => [
             "shared" => true,
             "callback" => function () {
@@ -145,14 +137,6 @@ return [
                 return $rem;
             }
         ],
-        // "comment" => [
-        //     "shared" => true,
-        //     "callback" => function () {
-        //         $comment = new \Oenstrom\Comment\Comment();
-        //         $comment->injectSession($this->get("session"));
-        //         return $comment;
-        //     }
-        // ],
         "commentController" => [
             "shared" => true,
             "callback" => function () {
@@ -165,30 +149,6 @@ return [
             "shared" => true,
             "callback" => function () {
                 $obj = new \Anax\Book\BookController();
-                $obj->setDI($this);
-                return $obj;
-            }
-        ],
-        "userController" => [
-            "shared" => true,
-            "callback" => function () {
-                $obj = new \Oenstrom\User\UserController();
-                $obj->setDI($this);
-                return $obj;
-            }
-        ],
-        "adminController" => [
-            "shared" => true,
-            "callback" => function () {
-                $obj = new \Oenstrom\User\AdminController();
-                $obj->setDI($this);
-                return $obj;
-            }
-        ],
-        "authHelper" => [
-            "shared" => true,
-            "callback" => function () {
-                $obj = new \Oenstrom\User\AuthHelper();
                 $obj->setDI($this);
                 return $obj;
             }

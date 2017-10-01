@@ -34,23 +34,9 @@ return [
             "file" => __DIR__ . "/route/books.php",
         ],
         [
-            "mount" => "user",
-            "file" => __DIR__ . "/route/user.php",
-        ],
-        [
-            "mount" => "admin",
-            "file" => __DIR__ . "/route/admin.php",
-        ],
-
-
-
-
-
-
-
-        [
             // Keep this last since its a catch all
             "mount" => null,
+            "sort" => 999,
             "file" => __DIR__ . "/route/404.php",
         ],
     ],
