@@ -159,7 +159,29 @@ Något som är lite svårare nu är att anpassa modulen mellan installationer. V
 
 ##Kmom06
 
-Redovisningstext här.
+###Har du någon erfarenhet av automatiserade tester och CI sedan tidigare?
+Jag har endast lite erfarenhet av enhetstester sedan tidigare dbwebb-kurser och det är inte så mycket. Det var annorlunda och svårare att enhetstesta än det vi gjort tidigare. Många olika beroenden och databas gjorde det ju inte lättare.
+
+###Hur ser du på begreppen, bra, onödigt, nödvändigt, tidskrävande?
+Jag skulle nog säga bra men inte alltid nödvändigt. Det beror helt på situationen. Är det ett projekt du jobbar själv på och endast använder själv så känner jag att CI och tester inte alls är lika viktigt. Däremot så fort projektet växer och det blir fler utvecklare och större användarbas tror jag det kan vara bra saker att implementera. Du hittar problem snabbare och integrerar delar snabbare och lättare. Sen att jag inte tycker det är lika roligt att skriva enhetstester som själva koden som ska testas gör ju att man gärna undviker det.
+
+Kom och tänka på podcasten jag lyssnade på här om dagen. Den handlar om hållbarhet och snabba lösningar. Påminde lite om den här frågan, kan vara värt en lyssning. [http://kodsnack.se/219/](http://kodsnack.se/219/)
+
+###Hur stor kodtäckning lyckades du uppnå i din modul?
+Jag fick väldigt mycket problem med testerna i det här kursmomentet. Ett error jag fick var “headers already sent”. Det gick att lösa genom “@runInSeparateProcess” i doc-blocken. Gjorde jag det fick jag istället problem med att sessionen inte fungerade lika bra. Det blev också problem med att assertions och kodtäckning inte dök upp om man körde i separat process.
+
+Jag läste om ett liknande problem som fixades i version 6.0.X av PHPUnit, så jag testade att uppgradera. Då fick jag istället problem med att PHPUnit-klassen inte hittades. När jag väl hade löst det så upptäckte jag att den nyare versionen inte alls fixade problemet med assertions och kodtäckning. Istället fick jag något annat error som jag trodde berodde på PHPUnit 6.3.0 vilket gjorde att jag nedgraderade till 5.7 igen, något som inte hjälpte. Felet var dock inte så svårlöst och efter det så stannade jag kvar på 5.7.
+
+Trots alla de här problemen och hur rörigt allt blev kom jag upp i 81 % kodtäckning enligt Scrutinizer. Vissa metoder som inte returnerade något visste jag inte exakt hur jag skulle testa så det blev att jag bara körde dem för att få kodtäckning. Färre beroenden och bättre uppdelad kod hade gjort allt lättare att testa. Något jag får tänka på i fortsättningen.
+
+Precis innan jag skulle lämna in uppgiften testade jag en gång till med @runInSeparateProcess och nu fungerade det. Har inte ändrat något vad jag vet om och så helt plötsligt fungerar det. Så nu lyckades jag komma upp i 87 % kodtäckning enligt Scrutinizer.
+
+###Berätta hur det gick att integrera mot de olika externa tjänsterna?
+Det gick bra och det var väldigt lätt. Logga in, lägg till och så var det klart. Jag känner dock att Scrutinizer var mest genomtänkt. Det kändes lättare att hitta på deras sida jämfört med de andra.
+
+###Vilken extern tjänst uppskattade du mest, eller har du förslag på ytterligare externa tjänster att använda?
+Tjänsten jag uppskattade mest får nog bli Scrutinizer. Det känns som det mest kompletta verktyget. Du får det Travis och Circle ger plus kodtäckning, kodbetyg och förslag på förbättringar.
+
 
 
 

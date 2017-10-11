@@ -1,5 +1,16 @@
 # Revision history
 
+## v6.0.0 (2017-10-11)
+* Added report for kmom06
+
+---
+
+## v5.0.0 (2017-10-01)
+* Added User as a separate module.
+* Removed src/User
+
+---
+
 ## v4.0.0 (2017-09-24)
 * Added HTMLForm module.
 * Added Database module.
