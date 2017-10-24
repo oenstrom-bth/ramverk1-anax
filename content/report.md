@@ -191,4 +191,31 @@ Tjänsten jag uppskattade mest får nog bli Scrutinizer. Det känns som det mest
 
 ##Kmom10
 
-Redovisningstext här.
+###Allmänt om projektet
+Det här blev ett väldigt stressigt projekt för mig då jag har haft väldigt lite tid. Detta resulterade i att jag endast hann med att göra grunden. Inga extra krav den här gången, vilket jag är missnöjd med. Det Indivduella Programvaruprojektet har tagit upp väldigt mycket tid, vilket gjorde att jag endast hade ett par dagar på mig att göra det här projektet. Sen trodde jag att inlämning var först den 25/10 klockan 23:59, något som gjorde att jag blev ännu mer stressad när jag väl tittade efter och såg att det inte stämde.
+
+Annars är det ett kul projekt. Det är inget jättesvårt projekt om man väl har gjort tidigare kursmoment, speciellt om man har gjort dem bra. Något jag inte har gjort. Detta då det även här har varit ont om tid. Många av delarna i projektet har jag skyndat igenom som jag gärna hade gjort bättre om jag hade haft mer tid.
+
+Som sagt, inte jättesvårt projekt och jag känner att jag lätt hade kunnat göra projektet bättre och med alla extra krav om jag hade haft ett par extra dagar.
+
+###Krav 1, 2, 3
+I projektet använder jag inte min “anax-user”-modul. Jag började med att använda den, men när det kom ett par funktioner som var specifika för det här projektet valde jag att ta bort den. Detta då jag ville hålla modulen så generell som möjligt. Modulen är dock uppdaterad med någon buggfix och lite ändringar.
+
+Sidan är skyddad med inlogg, men endast funktionalitet som till exempel skriva frågor, svar och kommentarer. Att visa frågor, svar, taggar och användare kan vem som helst göra.
+
+Överst på startsidan visas de tre senaste frågorna. Det finns även en länk för att skapa en ny fråga. Frågorna använder samma vy som på frågesidan, denna vyn lägger jag till inifrån index-vyn för att kunna styla den bättre. Kom dock på nu att det kanske hade gått att göra en region eller något liknande inne i index-vyn. Det får jag testa någon annan gång.
+
+Under de tre senaste frågorna visas de mest aktiva användarna och mest använda taggarna. En användares aktivitet är summan av antal frågor, svar och kommentarer som användaren har gjort. Hämtas med en fin liten SQL-sats som innehåller lite COUNT() och JOINS. De mest använda taggarna hämtas med COUNT() från kopplingstabellen r1_PostTag. Sedan mappar jag ett Tag-objekt till varje tagId från tabellen.
+
+Frågesidan visar de senaste frågorna. Här ser man frågans titel, ett utdrag av frågan och frågans taggar. När frågan ställdes och av vem syns också här. Jag valde att göra pagination så att endast fem frågor visas per sida. Tycker själv det fungerar väldigt bra. Enda problemet är att alla frågor hämtas från databasen och så görs sidorna i PHP. Det är ju inte det bästa sättet om det finns väldigt många frågor i databasen. Går du in på en fråga får du även upp kommentarer och svar.
+
+Allt skrivs i Markdown förutom kommentarer. Jag valde att göra så för att man inte ska kunna använda bland annat h1 i kommentarerna. Jag la dock till så att man kan använda backticks för att skriva inline-kod. Detta görs med en liten “preg_replace” som ersätter \`\` med <code> och </code>. Länkar som skrivs in blir också klickbara.
+
+Sidan för taggar visar alla taggar med en beskrivning om taggen. Som admin kan du lägga till nya taggar och redigera befintliga. Trycker du på en tag så kommer du till en sida som visar alla frågor med den taggen.
+
+Sidan för användare visar alla användare med deras Gravatar-bild och användarnamn. Går du in på en användare så ser du vilka frågor användaren har ställt och vilka frågor som den har svarat på. Du kan trycka på frågorna för att komma direkt till dem.
+
+###Tankar om kursen
+Jag har inte kunnat fokusera helt på den här kursen då Programvaruprojektet har tagit väldigt mycket tid och varit stressande. Förutom det har det ändå varit en bra kurs. Den bygger vidare på oophp-kursen, men det känns som att vissa av sakerna borde kanske ha varit med redan i oophp-kursen. Kursen har dock inte varit så jättesvår och tur är det då jag som sagt inte har haft så mycket tid att lägga på den. Det tråkiga är att jag inte har kunnat dyka ner, testa och göra det riktigt bra på grund av tiden. Detta var något jag saknade i oophp-kursen och nu fick vi det i denna kursen men då har jag inte hunnit göra det. Lite synd.
+
+Kursen får 6-8/10. Den riktiga poängen är väl 8 men 6:an är för att Programvaruprojektet förstörde den här kursen lite.

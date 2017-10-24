@@ -1,5 +1,10 @@
 # Revision history
 
+## v10.0.0 (2017-10-24)
+* Added report for kmom10
+
+---
+
 ## v6.0.0 (2017-10-11)
 * Added report for kmom06
 
